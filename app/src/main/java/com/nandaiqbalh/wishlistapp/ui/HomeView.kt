@@ -21,17 +21,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.nandaiqbalh.wishlistapp.AppBarView
+import androidx.navigation.NavController
 import com.nandaiqbalh.wishlistapp.R
+import com.nandaiqbalh.wishlistapp.Screen
+import com.nandaiqbalh.wishlistapp.WishViewModel
 import com.nandaiqbalh.wishlistapp.data.DummyWish
 import com.nandaiqbalh.wishlistapp.data.Wish
 
 @Composable
-fun HomeView() {
+fun HomeView(
+	navController: NavController,
+	viewModel: WishViewModel,
+) {
 	Scaffold(topBar = { AppBarView(title = "Wishlist", onBackNavClicked = {}) },
 		floatingActionButton = {
 			FloatingActionButton(
-				onClick = { /*TODO*/ },
+				onClick = {
+					navController.navigate(Screen.AddScreen.route)
+				},
 				modifier = Modifier.padding(20.dp),
 				contentColor = Color.White,
 				backgroundColor = colorResource(id = R.color.app_bar_color)

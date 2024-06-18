@@ -1,4 +1,4 @@
-package com.nandaiqbalh.wishlistapp
+package com.nandaiqbalh.wishlistapp.ui
 
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.nandaiqbalh.wishlistapp.R
 
 @Composable
 fun AppBarView(
