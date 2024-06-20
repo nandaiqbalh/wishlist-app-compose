@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.nandaiqbalh.wishlistapp.ui
 
 import androidx.compose.foundation.clickable
@@ -7,13 +9,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.DismissValue
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material.DismissDirection
+import androidx.compose.material.FractionalThreshold
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,6 +36,7 @@ import com.nandaiqbalh.wishlistapp.Screen
 import com.nandaiqbalh.wishlistapp.WishViewModel
 import com.nandaiqbalh.wishlistapp.data.Wish
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeView(
 	navController: NavController,
@@ -53,12 +62,32 @@ fun HomeView(
 				.fillMaxSize()
 				.padding(it)
 		) {
-			items(wishlist.value) { wish ->
-				WishItem(wish = wish) {
-					val id = wish.id
+			items(wishlist.value, key = { wish -> wish.id }) { wish ->
 
-					navController.navigate(Screen.AddScreen.route + "/$id")
-				}
+				val dismissState = rememberDismissState(
+					confirmStateChange = {
+						if (it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart) {
+							viewModel.deleteWish(wish)
+						}
+						true
+					}
+				)
+
+				SwipeToDismiss(
+					state = dismissState,
+					background = {},
+
+					directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
+					dismissThresholds = { FractionalThreshold(0.25f) },
+					dismissContent = {
+						WishItem(wish = wish) {
+							val id = wish.id
+
+							navController.navigate(Screen.AddScreen.route + "/$id")
+						}
+					}
+				)
+
 			}
 
 		}
