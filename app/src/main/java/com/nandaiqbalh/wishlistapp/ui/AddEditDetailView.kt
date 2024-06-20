@@ -40,7 +40,7 @@ fun AddEditDetailView(
 	navController: NavController,
 ) {
 
-	if (id != 0L){
+	if (id != 0L) {
 		val wish = viewModel.getWishById(id).collectAsState(initial = Wish(0L, "", ""))
 		viewModel.wishTitleState = wish.value.title
 		viewModel.wishDescriptionState = wish.value.description
@@ -98,12 +98,18 @@ fun AddEditDetailView(
 				if (viewModel.wishTitleState.isNotEmpty() && viewModel.wishDescriptionState.isNotEmpty()) {
 
 					if (id != 0L) {
-
+						viewModel.updateWish(
+							Wish(
+								id = id,
+								title = viewModel.wishTitleState.trim(),
+								description = viewModel.wishDescriptionState.trim()
+							)
+						)
 					} else {
 						viewModel.addWish(
 							Wish(
-								title = viewModel.wishTitleState,
-								description = viewModel.wishDescriptionState
+								title = viewModel.wishTitleState.trim(),
+								description = viewModel.wishDescriptionState.trim()
 							)
 						)
 
