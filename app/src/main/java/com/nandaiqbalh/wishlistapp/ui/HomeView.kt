@@ -16,6 +16,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -25,7 +26,6 @@ import androidx.navigation.NavController
 import com.nandaiqbalh.wishlistapp.R
 import com.nandaiqbalh.wishlistapp.Screen
 import com.nandaiqbalh.wishlistapp.WishViewModel
-import com.nandaiqbalh.wishlistapp.data.DummyWish
 import com.nandaiqbalh.wishlistapp.data.Wish
 
 @Composable
@@ -37,7 +37,7 @@ fun HomeView(
 		floatingActionButton = {
 			FloatingActionButton(
 				onClick = {
-					navController.navigate(Screen.AddScreen.route)
+					navController.navigate(Screen.AddScreen.route + "/0L")
 				},
 				modifier = Modifier.padding(20.dp),
 				contentColor = Color.White,
@@ -46,14 +46,18 @@ fun HomeView(
 				Icon(imageVector = Icons.Default.Add, contentDescription = "Floating action button")
 			}
 		}) {
+		val wishlist = viewModel.getAllWishes.collectAsState(initial = listOf())
+
 		LazyColumn(
 			modifier = Modifier
 				.fillMaxSize()
 				.padding(it)
 		) {
-			items(DummyWish.wishList) { wish ->
+			items(wishlist.value) { wish ->
 				WishItem(wish = wish) {
+					val id = wish.id
 
+					navController.navigate(Screen.AddScreen.route + "/$id")
 				}
 			}
 
