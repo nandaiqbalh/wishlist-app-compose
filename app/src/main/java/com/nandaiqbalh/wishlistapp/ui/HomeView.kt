@@ -2,7 +2,11 @@
 
 package com.nandaiqbalh.wishlistapp.ui
 
+import android.graphics.drawable.Icon
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,9 +26,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.FractionalThreshold
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -64,29 +71,44 @@ fun HomeView(
 		) {
 			items(wishlist.value, key = { wish -> wish.id }) { wish ->
 
-				val dismissState = rememberDismissState(
-					confirmStateChange = {
-						if (it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart) {
-							viewModel.deleteWish(wish)
-						}
-						true
+				val dismissState = rememberDismissState(confirmStateChange = {
+					if (it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart) {
+						viewModel.deleteWish(wish)
 					}
-				)
+					true
+				})
 
-				SwipeToDismiss(
-					state = dismissState,
-					background = {},
+				SwipeToDismiss(state = dismissState,
+					background = {
+						val color by animateColorAsState(
+							targetValue = if (dismissState.dismissDirection == DismissDirection.EndToStart) Color.Red else Color.Transparent,
+							label = ""
+						)
 
-					directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
-					dismissThresholds = { FractionalThreshold(0.25f) },
+						val alignment = Alignment.CenterEnd
+
+						Box(
+							modifier = Modifier
+								.fillMaxSize()
+								.background(color = color)
+								.padding(20.dp), contentAlignment = alignment
+						) {
+							Icon(
+								Icons.Default.Delete,
+								contentDescription = "Delete Icon",
+								tint = Color.White
+							)
+						}
+					},
+					directions = setOf(DismissDirection.EndToStart),
+					dismissThresholds = { FractionalThreshold(0.75f) },
 					dismissContent = {
 						WishItem(wish = wish) {
 							val id = wish.id
 
 							navController.navigate(Screen.AddScreen.route + "/$id")
 						}
-					}
-				)
+					})
 
 			}
 
