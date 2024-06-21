@@ -105,6 +105,9 @@ fun AddEditDetailView(
 								description = viewModel.wishDescriptionState.trim()
 							)
 						)
+
+						snackMessage.value = "Wish has been updated!"
+
 					} else {
 						viewModel.addWish(
 							Wish(
