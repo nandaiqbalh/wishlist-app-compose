@@ -1,7 +1,5 @@
 # Wishlist App
 
-[Screenshot App]
-
 Projet ini saya kembangkan untuk saya belajar khususnya pengembangan UI dengan Jetpack Compose.
 
 ## Features 🚀
@@ -24,9 +22,16 @@ Project ini dibangun menggunakan beberapa tools & teknologi seperti yang ada di 
 -----
 1. Make a **repository clone** in your local
     ```
-    git clone https://github.com/GG-3-0-Mobile-Engineering/ME14-MapDisaster-GG3MEGP0546-DekiNurFitrian.git
+    https://github.com/nandaiqbalh/wishlist-app-compose.git
     ```
 2. The last one! Bulid the app. **And well done ~**
+
+## Demo ✨
+![Screenshot_2024 06 21_20 50 33 824](https://github.com/nandaiqbalh/wishlist-app-compose/assets/70440045/14d44339-918a-40cc-88d9-3c91e01cc0e9)
+
+![Screenshot_2024 06 21_20 50 30 925](https://github.com/nandaiqbalh/wishlist-app-compose/assets/70440045/ef2ddee0-7649-4a41-bf53-90be00c264ce)
+
+https://github.com/nandaiqbalh/wishlist-app-compose/assets/70440045/46faa9a6-1f82-4180-8779-32731521b655
 
 
 
